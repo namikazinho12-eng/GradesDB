@@ -71,3 +71,13 @@ CREATE TABLE group_students (
     CONSTRAINT fk_group_students_students FOREIGN KEY (student_id) REFERENCES students (student_id),
     CONSTRAINT fk_group_students_groups FOREIGN KEY (group_id) REFERENCES groups (group_id)
 );
+
+CREATE TABLE teaching_loads (
+    teaching_load_id INT NOT NULL,
+    professor_id INT NOT NULL,
+    group_id INT NOT NULL,
+    credits DECIMAL(3,1) NOT NULL,
+    CONSTRAINT pk_teaching_loads PRIMARY KEY (teaching_load_id),
+    CONSTRAINT fk_teaching_loads_professors FOREIGN KEY (professor_id) REFERENCES professors (profesor_id),
+    CONSTRAINT fk_teaching_loads_groups FOREIGN KEY (group_id) REFERENCES groups (group_id)
+);
