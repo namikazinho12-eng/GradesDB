@@ -22,13 +22,6 @@ CREATE TABLE students (
     CONSTRAINT fk_students_people FOREIGN KEY (student_id) REFERENCES people (person_id)
 );
 
-CREATE TABLE professors (
-    profesor_id INT NOT NULL,
-    category VARCHAR(50) NOT NULL,
-    CONSTRAINT pk_professors PRIMARY KEY (profesor_id),
-    CONSTRAINT fk_professors_people FOREIGN KEY (profesor_id) REFERENCES people (person_id)
-);
-
 CREATE TABLE subjects (
     subject_id INT NOT NULL,
     degree_id INT NOT NULL,
@@ -89,4 +82,11 @@ CREATE TABLE enrollments (
     CONSTRAINT pk_enrollments PRIMARY KEY (enrollment_id),
     CONSTRAINT fk_enrollments_students FOREIGN KEY (student_id) REFERENCES students (student_id),
     CONSTRAINT fk_enrollments_subjects FOREIGN KEY (subject_id) REFERENCES subjects (subject_id)
+);
+
+CREATE TABLE professors (
+    profesor_id INT NOT NULL,
+    category VARCHAR(50) NOT NULL,
+    CONSTRAINT pk_professors PRIMARY KEY (profesor_id),
+    CONSTRAINT fk_professors_people FOREIGN KEY (profesor_id) REFERENCES people (person_id)
 );
