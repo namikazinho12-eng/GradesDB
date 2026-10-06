@@ -1,3 +1,14 @@
+DROP TABLE IF EXISTS enrollments;
+DROP TABLE IF EXISTS teaching_loads;
+DROP TABLE IF EXISTS group_students;
+DROP TABLE IF EXISTS marks;
+DROP TABLE IF EXISTS groups;
+DROP TABLE IF EXISTS subjects;
+DROP TABLE IF EXISTS professors;
+DROP TABLE IF EXISTS students;
+DROP TABLE IF EXISTS degrees;
+DROP TABLE IF EXISTS people;
+
 CREATE TABLE people (
     person_id INT NOT NULL,
     dni VARCHAR(9) NOT NULL,
@@ -20,6 +31,13 @@ CREATE TABLE students (
     access_method VARCHAR(50) NOT NULL,
     CONSTRAINT pk_students PRIMARY KEY (student_id),
     CONSTRAINT fk_students_people FOREIGN KEY (student_id) REFERENCES people (person_id)
+);
+
+CREATE TABLE professors (
+    professor_id INT NOT NULL,
+    category VARCHAR(50) NOT NULL,
+    CONSTRAINT pk_professors PRIMARY KEY (professor_id),
+    CONSTRAINT fk_professors_people FOREIGN KEY (professor_id) REFERENCES people (person_id)
 );
 
 CREATE TABLE subjects (
@@ -71,7 +89,7 @@ CREATE TABLE teaching_loads (
     group_id INT NOT NULL,
     credits DECIMAL(3,1) NOT NULL,
     CONSTRAINT pk_teaching_loads PRIMARY KEY (teaching_load_id),
-    CONSTRAINT fk_teaching_loads_professors FOREIGN KEY (professor_id) REFERENCES professors (profesor_id),
+    CONSTRAINT fk_teaching_loads_professors FOREIGN KEY (professor_id) REFERENCES professors (professor_id),
     CONSTRAINT fk_teaching_loads_groups FOREIGN KEY (group_id) REFERENCES groups (group_id)
 );
 
@@ -82,11 +100,4 @@ CREATE TABLE enrollments (
     CONSTRAINT pk_enrollments PRIMARY KEY (enrollment_id),
     CONSTRAINT fk_enrollments_students FOREIGN KEY (student_id) REFERENCES students (student_id),
     CONSTRAINT fk_enrollments_subjects FOREIGN KEY (subject_id) REFERENCES subjects (subject_id)
-);
-
-CREATE TABLE professors (
-    profesor_id INT NOT NULL,
-    category VARCHAR(50) NOT NULL,
-    CONSTRAINT pk_professors PRIMARY KEY (profesor_id),
-    CONSTRAINT fk_professors_people FOREIGN KEY (profesor_id) REFERENCES people (person_id)
 );
