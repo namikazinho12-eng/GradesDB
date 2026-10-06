@@ -41,3 +41,12 @@ CREATE TABLE subjects (
     CONSTRAINT fk_subjects_degrees FOREIGN KEY (degree_id) REFERENCES degrees (degree_id)
 );
 
+CREATE TABLE groups (
+    group_id INT NOT NULL,
+    subject_id INT NOT NULL,
+    group_name VARCHAR(10) NOT NULL,
+    activity VARCHAR(50) NOT NULL,
+    academic_year INT NOT NULL,
+    CONSTRAINT pk_groups PRIMARY KEY (group_id),
+    CONSTRAINT fk_groups_subjects FOREIGN KEY (subject_id) REFERENCES subjects (subject_id)
+);
