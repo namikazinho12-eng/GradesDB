@@ -22,3 +22,22 @@ CREATE TABLE students (
     CONSTRAINT fk_students_people FOREIGN KEY (student_id) REFERENCES people (person_id)
 );
 
+CREATE TABLE professors (
+    profesor_id INT NOT NULL,
+    category VARCHAR(50) NOT NULL,
+    CONSTRAINT pk_professors PRIMARY KEY (profesor_id),
+    CONSTRAINT fk_professors_people FOREIGN KEY (profesor_id) REFERENCES people (person_id)
+);
+
+CREATE TABLE subjects (
+    subject_id INT NOT NULL,
+    degree_id INT NOT NULL,
+    subject_name VARCHAR(100) NOT NULL,
+    acronym VARCHAR(10) NOT NULL,
+    credits DECIMAL(4,1) NOT NULL,
+    course INT NOT NULL,
+    subject_type VARCHAR(50) NOT NULL,
+    CONSTRAINT pk_subjects PRIMARY KEY (subject_id),
+    CONSTRAINT fk_subjects_degrees FOREIGN KEY (degree_id) REFERENCES degrees (degree_id)
+);
+
