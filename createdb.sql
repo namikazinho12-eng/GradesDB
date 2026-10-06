@@ -50,3 +50,15 @@ CREATE TABLE groups (
     CONSTRAINT pk_groups PRIMARY KEY (group_id),
     CONSTRAINT fk_groups_subjects FOREIGN KEY (subject_id) REFERENCES subjects (subject_id)
 );
+
+CREATE TABLE marks (
+    mark_id INT NOT NULL,
+    student_id INT NOT NULL,
+    group_id INT NOT NULL,
+    val DECIMAL(3,1) NOT NULL,
+    call_number VARCHAR(20) NOT NULL,
+    with_honors TINYINT(1) NOT NULL,
+    CONSTRAINT pk_marks PRIMARY KEY (mark_id),
+    CONSTRAINT fk_marks_students FOREIGN KEY (student_id) REFERENCES students (student_id),
+    CONSTRAINT fk_marks_groups FOREIGN KEY (group_id) REFERENCES groups (group_id)
+);
