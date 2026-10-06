@@ -62,3 +62,12 @@ CREATE TABLE marks (
     CONSTRAINT fk_marks_students FOREIGN KEY (student_id) REFERENCES students (student_id),
     CONSTRAINT fk_marks_groups FOREIGN KEY (group_id) REFERENCES groups (group_id)
 );
+
+CREATE TABLE group_students (
+    group_student_id INT NOT NULL,
+    student_id INT NOT NULL,
+    group_id INT NOT NULL,
+    CONSTRAINT pk_group_students PRIMARY KEY (group_student_id),
+    CONSTRAINT fk_group_students_students FOREIGN KEY (student_id) REFERENCES students (student_id),
+    CONSTRAINT fk_group_students_groups FOREIGN KEY (group_id) REFERENCES groups (group_id)
+);
