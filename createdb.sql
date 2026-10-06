@@ -81,3 +81,12 @@ CREATE TABLE teaching_loads (
     CONSTRAINT fk_teaching_loads_professors FOREIGN KEY (professor_id) REFERENCES professors (profesor_id),
     CONSTRAINT fk_teaching_loads_groups FOREIGN KEY (group_id) REFERENCES groups (group_id)
 );
+
+CREATE TABLE enrollments (
+    enrollment_id INT NOT NULL,
+    student_id INT NOT NULL,
+    subject_id INT NOT NULL,
+    CONSTRAINT pk_enrollments PRIMARY KEY (enrollment_id),
+    CONSTRAINT fk_enrollments_students FOREIGN KEY (student_id) REFERENCES students (student_id),
+    CONSTRAINT fk_enrollments_subjects FOREIGN KEY (subject_id) REFERENCES subjects (subject_id)
+);
