@@ -52,6 +52,7 @@ CREATE TABLE subjects (
     CONSTRAINT fk_subjects_degrees FOREIGN KEY (degree_id) REFERENCES degrees (degree_id)
 );
 
+-- Aquí está la modificación principal: añadida la cascada con la asignatura
 CREATE TABLE groups (
     group_id INT NOT NULL,
     subject_id INT NOT NULL,
@@ -59,9 +60,10 @@ CREATE TABLE groups (
     activity VARCHAR(50) NOT NULL,
     academic_year INT NOT NULL,
     CONSTRAINT pk_groups PRIMARY KEY (group_id),
-    CONSTRAINT fk_groups_subjects FOREIGN KEY (subject_id) REFERENCES subjects (subject_id)
+    CONSTRAINT fk_groups_subjects FOREIGN KEY (subject_id) REFERENCES subjects (subject_id) ON DELETE CASCADE
 );
 
+-- Se añade cascada aquí para permitir que las notas se borren si desaparece el grupo
 CREATE TABLE marks (
     mark_id INT NOT NULL,
     student_id INT NOT NULL,
@@ -71,18 +73,20 @@ CREATE TABLE marks (
     with_honors TINYINT(1) NOT NULL,
     CONSTRAINT pk_marks PRIMARY KEY (mark_id),
     CONSTRAINT fk_marks_students FOREIGN KEY (student_id) REFERENCES students (student_id),
-    CONSTRAINT fk_marks_groups FOREIGN KEY (group_id) REFERENCES groups (group_id)
+    CONSTRAINT fk_marks_groups FOREIGN KEY (group_id) REFERENCES groups (group_id) ON DELETE CASCADE
 );
 
+-- Se añade cascada aquí para que la asignación de alumnos se limpie si se borra el grupo
 CREATE TABLE group_students (
     group_student_id INT NOT NULL,
     student_id INT NOT NULL,
     group_id INT NOT NULL,
     CONSTRAINT pk_group_students PRIMARY KEY (group_student_id),
-    CONSTRAINT fk_group_students_students FOREIGN KEY (student_id) REFERENCES students (student_id),
-    CONSTRAINT fk_group_students_groups FOREIGN KEY (group_id) REFERENCES groups (group_id)
+    CONSTRAINT fk_group_students_students KEY (student_id) REFERENCES students (student_id),
+    CONSTRAINT fk_group_students_groups FOREIGN KEY (group_id) REFERENCES groups (group_id) ON DELETE CASCADE
 );
 
+-- Se añade cascada aquí para limpiar el reparto de profesores si se elimina el grupo
 CREATE TABLE teaching_loads (
     teaching_load_id INT NOT NULL,
     professor_id INT NOT NULL,
@@ -90,7 +94,7 @@ CREATE TABLE teaching_loads (
     credits DECIMAL(3,1) NOT NULL,
     CONSTRAINT pk_teaching_loads PRIMARY KEY (teaching_load_id),
     CONSTRAINT fk_teaching_loads_professors FOREIGN KEY (professor_id) REFERENCES professors (professor_id),
-    CONSTRAINT fk_teaching_loads_groups FOREIGN KEY (group_id) REFERENCES groups (group_id)
+    CONSTRAINT fk_teaching_loads_groups FOREIGN KEY (group_id) REFERENCES groups (group_id) ON DELETE CASCADE
 );
 
 CREATE TABLE enrollments (
