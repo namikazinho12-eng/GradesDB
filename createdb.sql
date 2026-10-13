@@ -114,3 +114,39 @@ ALTER TABLE professors
     ADD CONSTRAINT ck_professors_category CHECK (
         category IN ('Ayudante','AyudanteDoctor','Titular','Catedrático')
     );
+
+-- RESTRICCIONES TABLA students
+ALTER TABLE students
+    ADD CONSTRAINT ck_students_access_method CHECK (
+        access_method IN ('Selectividad','Ciclo','Mayor','Titulado','Extranjero')
+    );
+
+-- RESTRICCIONES TABLA degrees
+ALTER TABLE degrees
+    ADD CONSTRAINT rn13_degree_duration CHECK (years BETWEEN 3 AND 6),
+    ADD CONSTRAINT rn_uq_degrees_name UNIQUE (degree_name);
+
+-- RESTRICCIONES TABLA subjects
+ALTER TABLE subjects
+    ADD CONSTRAINT rn10_subjects_credits CHECK (credits IN (6, 12)),
+    ADD CONSTRAINT rn16_subjects_course CHECK (course BETWEEN 1 AND 6),
+    ADD CONSTRAINT ck_subjects_type CHECK (
+        subject_type IN ('Formación Básica','Obligatoria','Optativa')
+    ),
+    ADD CONSTRAINT rn_uq_subjects_name UNIQUE (subject_name),
+    ADD CONSTRAINT rn_uq_subjects_acronym UNIQUE (acronym);
+
+-- RESTRICCIONES TABLA groups
+ALTER TABLE groups
+    ADD CONSTRAINT ck_groups_activity CHECK (
+        activity IN ('Teoría','Laboratorio')
+    ),
+    ADD CONSTRAINT rn_uq_groups_combination UNIQUE (subject_id, group_name, activity, academic_year);
+
+-- RESTRICCIONES TABLA marks
+ALTER TABLE marks
+    ADD CONSTRAINT rn11_marks_val CHECK (val BETWEEN 0.0 AND 10.0),
+    ADD CONSTRAINT ck_marks_call_number CHECK (
+        call_number IN ('Primera','Segunda','Tercera')
+    ),
+    ADD CONSTRAINT ck_marks_with_honors CHECK (with_honors IN (0, 1));
