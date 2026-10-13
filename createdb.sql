@@ -101,3 +101,10 @@ CREATE TABLE enrollments (
     CONSTRAINT fk_enrollments_students FOREIGN KEY (student_id) REFERENCES students (student_id),
     CONSTRAINT fk_enrollments_subjects FOREIGN KEY (subject_id) REFERENCES subjects (subject_id)
 );
+
+-- RESTRICCIONES TABLA people
+ALTER TABLE people
+    ADD CONSTRAINT rn12_people_age CHECK (age BETWEEN 16 AND 70),
+    ADD CONSTRAINT rn14_people_dni CHECK (dni REGEXP '^[0-9]{8}[A-Za-z]$'),
+    ADD CONSTRAINT rn_uq_people_dni UNIQUE (dni),
+    ADD CONSTRAINT rn_uq_people_email UNIQUE (email);
